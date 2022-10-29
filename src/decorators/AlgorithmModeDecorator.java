@@ -1,22 +1,23 @@
 package decorators;
 
-import algorithms.EncryptionAlgorithm;
+import algorithms.Algorithm;
 
-public class AlgorithmModeDecorator implements EncryptionAlgorithm {
+public class AlgorithmModeDecorator implements Algorithm {
 
-    private EncryptionAlgorithm encryptionMethod;
+    private final Algorithm algorithm;
 
-    public AlgorithmModeDecorator(EncryptionAlgorithm encryptionMethod) {
-        this.encryptionMethod = encryptionMethod;
+
+    public AlgorithmModeDecorator(Algorithm algorithm) {
+        this.algorithm = algorithm;
     }
 
     @Override
     public void encrypt() {
-
+        this.algorithm.encrypt();
     }
 
     @Override
     public void decrypt() {
-
+        this.algorithm.decrypt();
     }
 }

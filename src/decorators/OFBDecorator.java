@@ -1,4 +1,9 @@
 package decorators;
 
-public class OFBDecorator {
+import algorithms.Algorithm;
+
+public class OFBDecorator extends AlgorithmModeDecorator{
+    public OFBDecorator(Algorithm encryptionMethod) {
+        super(encryptionMethod);
+    }
 }

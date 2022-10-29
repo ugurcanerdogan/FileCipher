@@ -1,4 +1,9 @@
 package decorators;
 
-public class CTRDecorator {
+import algorithms.Algorithm;
+
+public class CTRDecorator extends AlgorithmModeDecorator{
+    public CTRDecorator(Algorithm encryptionMethod) {
+        super(encryptionMethod);
+    }
 }

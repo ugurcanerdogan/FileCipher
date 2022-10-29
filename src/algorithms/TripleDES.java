@@ -1,6 +1,6 @@
 package algorithms;
 
-public class THREEDES implements EncryptionAlgorithm{
+public class TripleDES implements Algorithm {
     @Override
     public void encrypt() {
 

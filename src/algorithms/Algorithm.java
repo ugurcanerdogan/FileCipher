@@ -1,6 +1,6 @@
 package algorithms;
 
-public interface EncryptionAlgorithm {
+public interface Algorithm {
 
     void encrypt();
     void decrypt();

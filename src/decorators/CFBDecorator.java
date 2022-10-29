@@ -1,4 +1,9 @@
 package decorators;
 
-public class CFBDecorator {
+import algorithms.Algorithm;
+
+public class CFBDecorator extends AlgorithmModeDecorator{
+    public CFBDecorator(Algorithm encryptionMethod) {
+        super(encryptionMethod);
+    }
 }
