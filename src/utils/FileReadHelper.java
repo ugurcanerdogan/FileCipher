@@ -4,30 +4,31 @@ import java.io.FileInputStream;
 import java.util.HashMap;
 
 public class FileReadHelper {
-    StringBuilder inputString = new StringBuilder();
+    String inputString;
 
     public FileReadHelper(String inputFile) {
+        StringBuilder input = new StringBuilder();
 
         try {
             FileInputStream fin = new FileInputStream(inputFile);
             int i;
             while ((i = fin.read()) != -1) {
-                this.inputString.append((char) i);
+                input.append((char) i);
             }
             fin.close();
+            this.inputString = input.toString();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public String buildString() {
-        return this.inputString.toString();
+    public String getInput() {
+        return this.inputString;
     }
 
-    public HashMap<String, String> buildKeyDetails() {
+    public HashMap<String, String> buildKeyMap() {
         HashMap<String, String> keyDetails = new HashMap<>();
-        String keyString = this.buildString();
-        String[] keyElements = keyString.split(" - ");
+        String[] keyElements = inputString.split(" - ");
         keyDetails.put("IV", keyElements[0]);
         keyDetails.put("Key", keyElements[1]);
         keyDetails.put("Nonce", keyElements[2]);

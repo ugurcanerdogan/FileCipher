@@ -2,6 +2,8 @@ package algorithms;
 
 public interface Algorithm {
 
-    void encrypt();
-    void decrypt();
+    String encrypt(String input);
+
+    String decrypt(String input);
+
 }

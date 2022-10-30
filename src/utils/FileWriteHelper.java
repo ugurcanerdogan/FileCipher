@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 
 public class FileWriteHelper {
     FileOutputStream fout = null;
+
     public FileWriteHelper(String outputFile) {
 
         try {
