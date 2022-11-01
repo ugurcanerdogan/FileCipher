@@ -25,6 +25,6 @@ public class Logger {
 
     public void logToFile(long elapsedTime) throws IOException {
         String logText = this.inputFile + " " + this.outputFile + " " + this.operation + " " + this.cryptAlgorithm + " " + this.mode + " " + elapsedTime;
-        FileWriteHelper.writeString("run.log", logText, false);
+        FileWriteHelper.logToFile("run.log", logText);
     }
 }

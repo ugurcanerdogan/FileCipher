@@ -20,7 +20,7 @@ public class CTRDecorator extends AlgorithmModeDecorator {
         byte[][] outputBlocks = new byte[inputBlocks.length][];
         int indexCounter = 0;
         int ctr = 0;
-        byte[] nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.findCounter(ctr));
+        byte[] nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.integerToByteArrayView(ctr));
         byte[] encOutput;
         byte[] xorOutput;
 
@@ -29,7 +29,7 @@ public class CTRDecorator extends AlgorithmModeDecorator {
             xorOutput = AlgorithmHelper.xor(encOutput, block);
             outputBlocks[indexCounter] = xorOutput;
             ctr += 1;
-            nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.findCounter(ctr));
+            nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.integerToByteArrayView(ctr));
             indexCounter++;
         }
         return AlgorithmHelper.mergeInput(outputBlocks);
@@ -42,7 +42,7 @@ public class CTRDecorator extends AlgorithmModeDecorator {
         byte[][] outputBlocks = new byte[inputBlocks.length][];
         int indexCounter = 0;
         int ctr = 0;
-        byte[] nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.findCounter(ctr));
+        byte[] nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.integerToByteArrayView(ctr));
         byte[] encOutput;
         byte[] xorOutput;
 
@@ -51,7 +51,7 @@ public class CTRDecorator extends AlgorithmModeDecorator {
             xorOutput = AlgorithmHelper.xor(encOutput, block);
             outputBlocks[indexCounter] = xorOutput;
             ctr += 1;
-            nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.findCounter(ctr));
+            nonceBytes = AlgorithmHelper.xor(AlgorithmHelper.stringToByteArray(this.nonce.substring(0, 8)), AlgorithmHelper.integerToByteArrayView(ctr));
             indexCounter++;
         }
         return AlgorithmHelper.mergeInput(outputBlocks);

@@ -55,8 +55,9 @@ public class Main {
             case "-e" -> {
                 FileReadHelper inputReader = new FileReadHelper(inputFile);
                 String inputText = new String(Base64.getEncoder().encode(inputReader.getInput().getBytes(StandardCharsets.UTF_16BE)));
+                byte[] initalizedByteArray = AlgorithmHelper.stringToByteArray(inputText);
                 watch.start();
-                byte[] encryptedOutput = algorithm.encrypt(AlgorithmHelper.stringToByteArray(inputText));
+                byte[] encryptedOutput = algorithm.encrypt(initalizedByteArray);
                 watch.stop();
                 String output = AlgorithmHelper.byteArrayToString(encryptedOutput);
                 FileWriteHelper.writeString(outputFile, output, false);
@@ -64,8 +65,9 @@ public class Main {
             case "-d" -> {
                 FileReadHelper inputReader = new FileReadHelper(inputFile);
                 String inputText = inputReader.getInput();
+                byte[] initalizedByteArray = AlgorithmHelper.stringToByteArray(inputText);
                 watch.start();
-                byte[] decryptedOutput = algorithm.decrypt(AlgorithmHelper.stringToByteArray(inputText));
+                byte[] decryptedOutput = algorithm.decrypt(initalizedByteArray);
                 watch.stop();
                 String output = new String(Base64.getDecoder().decode(AlgorithmHelper.byteArrayToString(decryptedOutput).trim()), StandardCharsets.UTF_16BE);
                 FileWriteHelper.writeString(outputFile, output, true);

@@ -2,6 +2,7 @@ package decorators;
 
 import algorithms.Algorithm;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 //Decorator abstract class
@@ -12,7 +13,7 @@ public abstract class AlgorithmModeDecorator implements Algorithm {
 
     public AlgorithmModeDecorator(Algorithm algorithm, String modeSpec) {
         this.algorithm = algorithm;
-        this.modeSpec = Arrays.copyOfRange(modeSpec.getBytes(), 0, 8);
+        this.modeSpec = Arrays.copyOfRange(modeSpec.getBytes(StandardCharsets.UTF_16BE), 0, 8);
     }
 
     @Override

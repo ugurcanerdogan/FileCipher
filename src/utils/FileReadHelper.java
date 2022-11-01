@@ -14,7 +14,6 @@ public class FileReadHelper {
 
     public static String readInput(String inputPath) throws IOException {
         Path fileName = Path.of(inputPath);
-
         return Files.readString(fileName);
     }
 
@@ -24,11 +23,10 @@ public class FileReadHelper {
 
     public HashMap<String, String> buildKeyMap() {
         HashMap<String, String> keyDetails = new HashMap<>();
-        String[] keyElements = inputString.split(" - ");
+        String[] keyElements = this.inputString.split(" - ");
         keyDetails.put("IV", keyElements[0]);
         keyDetails.put("Key", keyElements[1]);
         keyDetails.put("Nonce", keyElements[2]);
         return keyDetails;
     }
-
 }
