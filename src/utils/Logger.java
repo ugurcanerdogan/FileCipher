@@ -1,8 +1,8 @@
 package utils;
 
-public class Logger {
+import java.io.IOException;
 
-    final FileWriteHelper fileLogger = new FileWriteHelper("run.log");
+public class Logger {
     String inputFile;
     String outputFile;
     String operation;
@@ -23,8 +23,8 @@ public class Logger {
         }
     }
 
-    public void logToFile(long elapsedTime) {
+    public void logToFile(long elapsedTime) throws IOException {
         String logText = this.inputFile + " " + this.outputFile + " " + this.operation + " " + this.cryptAlgorithm + " " + this.mode + " " + elapsedTime;
-        this.fileLogger.writeString(logText);
+        FileWriteHelper.writeString("run.log", logText, false);
     }
 }

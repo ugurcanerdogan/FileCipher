@@ -1,9 +1,10 @@
 package algorithms;
 
+// Decorator Main Interface
 public interface Algorithm {
 
-    String encrypt(String input);
+    byte[] encrypt(byte[] input);
 
-    String decrypt(String input);
+    byte[] decrypt(byte[] input);
 
 }

@@ -5,10 +5,10 @@ import decorators.CBCDecorator;
 import decorators.CFBDecorator;
 import decorators.CTRDecorator;
 import decorators.OFBDecorator;
-import utils.FileReadHelper;
-import utils.FileWriteHelper;
-import utils.Logger;
-import utils.Stopwatch;
+import utils.*;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -23,16 +23,14 @@ public class Main {
 
         Algorithm algorithm;
         Stopwatch watch = new Stopwatch();
-        FileReadHelper inputReader = new FileReadHelper(inputFile);
         FileReadHelper keyReader = new FileReadHelper(keyFile);
-        FileWriteHelper outputWriter = new FileWriteHelper(outputFile);
 
         String keyString = keyReader.buildKeyMap().get("Key");
-        String inputText = inputReader.getInput();
+        String ivString = keyReader.buildKeyMap().get("IV");
+        String nonceString = keyReader.buildKeyMap().get("Nonce");
 
         Logger logger = new Logger(inputFile, outputFile, operation, cryptAlgorithm, mode);
 
-        // TODO: switch içlerine print at ve dene tek tek
         switch (cryptAlgorithm) {
             case "DES" -> algorithm = new DES(keyString);
             case "3DES" -> algorithm = new TripleDES(keyString);
@@ -43,26 +41,34 @@ public class Main {
         }
 
         switch (mode) {
-            case "CBC" -> algorithm = new CBCDecorator(algorithm);
-            case "CFB" -> algorithm = new CFBDecorator(algorithm);
-            case "OFB" -> algorithm = new OFBDecorator(algorithm);
-            case "CTR" -> algorithm = new CTRDecorator(algorithm);
+            case "CBC" -> algorithm = new CBCDecorator(algorithm, ivString);
+            case "CFB" -> algorithm = new CFBDecorator(algorithm, ivString);
+            case "OFB" -> algorithm = new OFBDecorator(algorithm, ivString);
+            case "CTR" -> algorithm = new CTRDecorator(algorithm, ivString, nonceString);
             default -> {
                 System.out.println("ALGORITHM MODE (cbc/cfb..) SELECTION FAILED!");
-                algorithm = new CBCDecorator(algorithm);
+                algorithm = new CBCDecorator(algorithm, ivString);
             }
         }
 
         switch (operation) {
             case "-e" -> {
+                FileReadHelper inputReader = new FileReadHelper(inputFile);
+                String inputText = new String(Base64.getEncoder().encode(inputReader.getInput().getBytes(StandardCharsets.UTF_16BE)));
                 watch.start();
-                algorithm.encrypt(inputText);
+                byte[] encryptedOutput = algorithm.encrypt(AlgorithmHelper.stringToByteArray(inputText));
                 watch.stop();
+                String output = AlgorithmHelper.byteArrayToString(encryptedOutput);
+                FileWriteHelper.writeString(outputFile, output, false);
             }
             case "-d" -> {
+                FileReadHelper inputReader = new FileReadHelper(inputFile);
+                String inputText = inputReader.getInput();
                 watch.start();
-                algorithm.decrypt(inputText);
+                byte[] decryptedOutput = algorithm.decrypt(AlgorithmHelper.stringToByteArray(inputText));
                 watch.stop();
+                String output = new String(Base64.getDecoder().decode(AlgorithmHelper.byteArrayToString(decryptedOutput).trim()), StandardCharsets.UTF_16BE);
+                FileWriteHelper.writeString(outputFile, output, true);
             }
             default -> System.out.println("ALGORITHM OPERATION (enc/dec) SELECTION FAILED!");
         }
